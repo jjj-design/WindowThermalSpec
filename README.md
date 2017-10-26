@@ -1,1 +1,1 @@
-# JJJP5_SHGWG
+# WindowThermalSpec
