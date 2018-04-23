@@ -53,7 +53,7 @@
 * GlassAngularProperty(GAP)  
 --> TSRTG  
 --> ASRIG  
---> main
+--> main  
 <-- None  
 
 * RollershadeAngularProperty(RAP)  
