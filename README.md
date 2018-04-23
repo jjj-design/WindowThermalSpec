@@ -2,7 +2,7 @@
 
 ## 計算フローの概略
 
-AbsorbedSolarRadiationIntoGlazing(ASRIG) <-- GAP
-                                         <-- RAP
-                                         <-- MROSR
-                                         <-- DDR
+AbsorbedSolarRadiationIntoGlazing(ASRIG) <-- GAP  
+                                         <-- RAP  
+                                         <-- MROSR  
+                                         <-- DDR  
