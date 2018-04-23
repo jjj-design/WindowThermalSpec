@@ -1,8 +1,9 @@
 # 開口部の評価方法に関する仕様書
 
 ## 計算ファイルの依存関係整理
+(<--:引用、-->:被引用)  
 
-jjj_shg_spec(main)  
+* jjj_shg_spec(main)  
 <-- WEA  
 <-- SP  
 <-- SG2BDR  
@@ -18,7 +19,7 @@ jjj_shg_spec(main)
 <-- HGOG  
 
 
-Weather(WEA)  
+* Weather(WEA)  
 --> HCP(only in Example)  
 --> SP(only in Example)  
 --> SG2BDR(only in Example)  
@@ -26,75 +27,75 @@ Weather(WEA)
 --> main  
 <-- None  
 
-HeatingCoolingPeriod(HCP)  
+* HeatingCoolingPeriod(HCP)  
 --> None  
 <-- WEA(only in Example)  
 
-SolarPosition(SP)  
+* SolarPosition(SP)  
 --> SG2BDR(only in Example)  
 --> main  
 <-- WEA(only in Example)  
 
-DivisionDiffuseRatio(DDR)  
+* DivisionDiffuseRatio(DDR)  
 --> TSRTG  
 --> ASRIG   
 <-- None  
 
-SplittingGlobal2BeamDiffuseRadiation(SG2BDR)  
+* SplittingGlobal2BeamDiffuseRadiation(SG2BDR)  
 --> main  
 <-- WEA(only in Example)  
 <-- SP(only in Example)  
 
-SolarRadiationOnTiltedSurface(SROTS)  
+* SolarRadiationOnTiltedSurface(SROTS)  
 --> main  
 <-- WEA(only in Example)  
 
-GlassAngularProperty(GAP)  
+* GlassAngularProperty(GAP)  
 --> TSRTG  
 --> ASRIG  
 --> main
 <-- None  
 
-RollershadeAngularProperty(RAP)  
+* RollershadeAngularProperty(RAP)  
 --> TSRTG  
 --> ASRIG  
 --> main  
 <-- None  
 
-MultipleReflectionOfSolarRadiation(MROSR)  
+* MultipleReflectionOfSolarRadiation(MROSR)  
 --> TSRTG  
 --> ASRIG  
 <-- None  
 
-PaneResistance(PR)  
+* PaneResistance(PR)  
 --> HB  
 <-- None  
 
-ClosedCavityResistance(CCR)  
+* ClosedCavityResistance(CCR)  
 --> HB  
 <-- None  
 
-SurfaceResistance(SR)  
+* SurfaceResistance(SR)  
 --> HB  
 <-- None  
 
-HeatBalance(HB)  
+* HeatBalance(HB)  
 --> main  
 <-- PR  
 <-- CCR  
 <-- SR  
 
-TransformUnit(TU)  
+* TransformUnit(TU)  
 --> main  
 <-- None  
 
-IncidentSolarRadiationOnGlazing(ISROG)  
+* IncidentSolarRadiationOnGlazing(ISROG)  
 --> TSRTG(only in Example)  
 --> ASRIG(only in Example)  
 --> main  
 <-- None  
 
-TransmittedSolarRadiationThroughGlazing(TSRTG)  
+* TransmittedSolarRadiationThroughGlazing(TSRTG)  
 <-- GAP  
 <-- RAP  
 <-- MROSR  
@@ -102,7 +103,7 @@ TransmittedSolarRadiationThroughGlazing(TSRTG)
 <-- ISROG(only in Example)  
 --> main  
 
-AbsorbedSolarRadiationIntoGlazing(ASRIG)  
+* AbsorbedSolarRadiationIntoGlazing(ASRIG)  
 <-- GAP  
 <-- RAP  
 <-- MROSR  
@@ -110,18 +111,18 @@ AbsorbedSolarRadiationIntoGlazing(ASRIG)
 <-- ISROG(only in Example)  
 --> main  
 
-SecondaryHeatTransferFromGlazing(SHTFG)  
+* SecondaryHeatTransferFromGlazing(SHTFG)  
 <-- None  
 --> main  
 
-HourlyGvalueOfGlazing(HGOG)  
+* HourlyGvalueOfGlazing(HGOG)  
 <-- None  
 --> main  
 
-HourlyGvalueOfFrame(HGOF)  
+* HourlyGvalueOfFrame(HGOF)  
 --> None  
 <-- None  
 
-HourlyGvalueOfWindow(HGOW)  
+* HourlyGvalueOfWindow(HGOW)  
 --> None  
 <-- None  
