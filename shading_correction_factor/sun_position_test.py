@@ -62,6 +62,23 @@ class TestCalcEed(unittest.TestCase):
                 expected = eedA
                 self.assertAlmostEqual(actual, expected, delta=0.000000001)
 
+class TestCalcTdt(unittest.TestCase):
+
+    # 正しい値が返ってくるかどうかのテスト
+    def test_assert(self):
+    
+        f = open('./TestConfig01/Tdt.csv','r',encoding='utf8')
+        reader = csv.reader(f)
+        header = next(reader)
+        for i, row in enumerate(reader):
+            row_float = [float(d) for d in row]
+            case, Longitude, NDay, TT, TdtA = tuple(row_float)
+            with self.subTest(case = case):
+                actual = sun_position.calc_Tdt(Longitude, sun_position.calc_eed(NDay), TT)
+                expected = TdtA
+                self.assertAlmostEqual(actual, expected, delta=0.000000001)
+
+
     
 if __name__ == "__main__":
     unittest.main()
