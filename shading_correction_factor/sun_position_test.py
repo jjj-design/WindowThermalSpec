@@ -132,6 +132,28 @@ class TestCalcHsdtA(unittest.TestCase):
                 expected = hsdtA
                 self.assertAlmostEqual(actual, expected, delta=0.000000001)
 
+class TestCalcAzsdt(unittest.TestCase):
+
+    # 正しい値が返ってくるかどうかのテスト
+    def test_assert(self):
+
+        f = open('./test_case/Azsdt.csv','r',encoding='utf8')
+        reader = csv.reader(f)
+        header = next(reader)
+        for i, row in enumerate(reader):
+            row_float = [float(d) for d in row]
+            case, Latitude, Longitude, NDay, TT, AzsdtA = tuple(row_float)
+            with self.subTest(case = case):
+                deltad = sun_position.calc_deltad(NDay)
+                eed = sun_position.calc_eed(NDay)
+                Tdt = sun_position.calc_Tdt(Longitude, eed, TT) 
+                sinh = sun_position.calc_sinh(Latitude, deltad, Tdt)
+                cosh = sun_position.calc_cosh(sinh)
+                actual = sun_position.calc_Azsdt(Latitude, deltad, Tdt, sinh, cosh)
+                expected = AzsdtA
+                self.assertAlmostEqual(actual, expected, delta=0.000000001)
+            
+
     
 if __name__ == "__main__":
     unittest.main()
