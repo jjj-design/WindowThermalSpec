@@ -19,7 +19,7 @@ class TestCalcNDayNHourFunction(unittest.TestCase):
                 self.assertAlmostEqual(actual[0], expected[0], delta=0.000000001)
                 self.assertAlmostEqual(actual[1], expected[1], delta=0.000000001)
 
-class TestCalcTT(unittest.TestCase):
+class TestCalcTTFunction(unittest.TestCase):
     
     # 正しい値が返ってくるかどうかのテスト    
     def test_assert(self):
@@ -30,7 +30,7 @@ class TestCalcTT(unittest.TestCase):
                 expected = NHour + MM / 6
                 self.assertAlmostEqual(actual, expected, delta=0.000000001)
 
-class TestCalcDeltad(unittest.TestCase):
+class TestCalcDeltadFunction(unittest.TestCase):
     
     # 正しい値が返ってくるかどうかのテスト    
     def test_assert(self):
@@ -46,7 +46,7 @@ class TestCalcDeltad(unittest.TestCase):
                 expected = deltadA
                 self.assertAlmostEqual(actual, expected, delta=0.000000001)
 
-class TestCalcEed(unittest.TestCase):
+class TestCalcEedFunction(unittest.TestCase):
     
     # 正しい値が返ってくるかどうかのテスト
     def test_assert(self):
@@ -62,7 +62,7 @@ class TestCalcEed(unittest.TestCase):
                 expected = eedA
                 self.assertAlmostEqual(actual, expected, delta=0.000000001)
 
-class TestCalcTdt(unittest.TestCase):
+class TestCalcTdtFunction(unittest.TestCase):
 
     # 正しい値が返ってくるかどうかのテスト
     def test_assert(self):
@@ -78,7 +78,7 @@ class TestCalcTdt(unittest.TestCase):
                 expected = TdtA
                 self.assertAlmostEqual(actual, expected, delta=0.000000001)
 
-class TestCalcSinh(unittest.TestCase):
+class TestCalcSinhFunction(unittest.TestCase):
 
     # 正しい値が返ってくるかどうかのテスト
     def test_assert(self):
@@ -95,7 +95,7 @@ class TestCalcSinh(unittest.TestCase):
                 expected = sinhA
                 self.assertAlmostEqual(actual, expected, delta=0.000000001)
 
-class TestCalcCosh(unittest.TestCase):
+class TestCalcCoshFunction(unittest.TestCase):
 
     # 正しい値が返ってくるかどうかのテスト
     def test_assert(self):
@@ -113,7 +113,7 @@ class TestCalcCosh(unittest.TestCase):
                 expected = coshA
                 self.assertAlmostEqual(actual, expected, delta=0.000000001)
 
-class TestCalcHsdtA(unittest.TestCase):
+class TestCalcHsdtAFunction(unittest.TestCase):
 
     # 正しい値が返ってくるかどうかのテスト
     def test_assert(self):
@@ -132,7 +132,7 @@ class TestCalcHsdtA(unittest.TestCase):
                 expected = hsdtA
                 self.assertAlmostEqual(actual, expected, delta=0.000000001)
 
-class TestCalcAzsdt(unittest.TestCase):
+class TestCalcAzsdtFunction(unittest.TestCase):
 
     # 正しい値が返ってくるかどうかのテスト
     def test_assert(self):
@@ -153,7 +153,7 @@ class TestCalcAzsdt(unittest.TestCase):
                 expected = AzsdtA
                 self.assertAlmostEqual(actual, expected, delta=0.000000001)
             
-class TestCalcAzwj(unittest.TestCase):
+class TestCalcAzwjFunction(unittest.TestCase):
     
     # 正しい値が返ってくるかどうかのテスト
     def test_assert(self):
@@ -193,6 +193,33 @@ class TestCalcAzwj(unittest.TestCase):
             sun_position.calc_Azwj(azimuth)
             the_exception = cm.exception
             self.assertEqual(the_exception.error_code, 3)
-    
+
+class TestCalcAzwjdtFunction(unittest.TestCase):
+
+    # 正しい値が返ってくるかどうかのテスト
+    def test_assert(self):
+
+        f = open('./TestConfig01/Azwjdt.csv','r',encoding='utf8')
+        reader = csv.reader(f)
+        header = next(reader)
+        for i, row in enumerate(reader):
+            row_float = [float(d) for d in row]
+            case, Azwj, Latitude, Longitude, NDay, TT, AzwjdtA = tuple(row_float)
+            with self.subTest(case = case):
+                deltad = sun_position.calc_deltad(NDay)
+                eed = sun_position.calc_eed(NDay)
+                Tdt = sun_position.calc_Tdt(Longitude, eed, TT) 
+                sinh = sun_position.calc_sinh(Latitude, deltad, Tdt)
+                cosh = sun_position.calc_cosh(sinh)
+                Azsdt = sun_position.calc_Azsdt(Latitude, deltad, Tdt, sinh, cosh)
+                actual = sun_position.calc_Azwjdt(Azwj, Azsdt)
+                expected = AzwjdtA
+                self.assertAlmostEqual(actual, expected, delta=0.000000001)
+
+
+
+
+
+
 if __name__ == "__main__":
     unittest.main()
