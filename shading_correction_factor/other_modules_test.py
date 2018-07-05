@@ -4,6 +4,7 @@ import unittest
 
 class TestOtherModules(unittest.TestCase):
     
+    # 正しい値が帰ってくるかどうかのテスト    
     def test_calc_Azwj(self):
         test_list = [
                 ('北北東', -157.5),
@@ -32,6 +33,8 @@ class TestOtherModules(unittest.TestCase):
                 expected = azwjA
                 self.assertEqual(actual,expected)
 
+    # 間違った値が指定された場合にエラーが返ってくるかのテスト
+    # -180以下、および、180より大の値は許容されていない。
     def test_calc_Azwj_exception(self):
         azimuth = -180.1
         with self.assertRaises(ValueError) as cm:
