@@ -100,7 +100,7 @@ class TestCalcCosh(unittest.TestCase):
     # 正しい値が返ってくるかどうかのテスト
     def test_assert(self):
     
-        f = open('./TestConfig01/cosh.csv','r',encoding='utf8')
+        f = open('./test_case/cosh.csv','r',encoding='utf8')
         reader = csv.reader(f)
         header = next(reader)
         for i, row in enumerate(reader):
@@ -118,7 +118,7 @@ class TestCalcHsdtA(unittest.TestCase):
     # 正しい値が返ってくるかどうかのテスト
     def test_assert(self):
     
-        f = open('./TestConfig01/hsdt.csv','r',encoding='utf8')
+        f = open('./test_case/hsdt.csv','r',encoding='utf8')
         reader = csv.reader(f)
         header = next(reader)
         for i, row in enumerate(reader):
