@@ -113,7 +113,7 @@ class TestCalcCosh(unittest.TestCase):
                 expected = coshA
                 self.assertAlmostEqual(actual, expected, delta=0.000000001)
 
-class TestCalcSinh(unittest.TestCase):
+class TestCalcHsdtA(unittest.TestCase):
 
     # 正しい値が返ってくるかどうかのテスト
     def test_assert(self):
