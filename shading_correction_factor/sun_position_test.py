@@ -78,6 +78,23 @@ class TestCalcTdt(unittest.TestCase):
                 expected = TdtA
                 self.assertAlmostEqual(actual, expected, delta=0.000000001)
 
+class TestCalcSinh(unittest.TestCase):
+
+    # 正しい値が返ってくるかどうかのテスト
+    def test_assert(self):
+    
+        f = open('./TestConfig01/sinh.csv','r',encoding='utf8')
+        reader = csv.reader(f)
+        header = next(reader)
+        for i, row in enumerate(reader):
+            row_float = [float(d) for d in row]
+            case, Latitude, Longitude, NDay, TT, sinhA = tuple(row_float)
+            with self.subTest(case = case):
+                actual = sun_position.calc_sinh(Latitude, sun_position.calc_deltad(NDay),
+                                                sun_position.calc_Tdt(Longitude, sun_position.calc_eed(NDay), TT) )
+                expected = sinhA
+                self.assertAlmostEqual(actual, expected, delta=0.000000001)
+
 
     
 if __name__ == "__main__":
