@@ -46,6 +46,22 @@ class TestCalcDeltad(unittest.TestCase):
                 expected = deltadA
                 self.assertAlmostEqual(actual, expected, delta=0.000000001)
 
+class TestCalcEed(unittest.TestCase):
+    
+    # 正しい値が返ってくるかどうかのテスト
+    def test_assert(self):
+        
+        f = open('./test_case/eed.csv','r',encoding='utf8')
+        reader = csv.reader(f)
+        header = next(reader)
+        for i, row in enumerate(reader):
+            row_float = [float(d) for d in row]
+            case, NDay, eedA = tuple(row_float)
+            with self.subTest(case = case):
+                actual = sun_position.calc_eed(NDay)
+                expected = eedA
+                self.assertAlmostEqual(actual, expected, delta=0.000000001)
+
     
 if __name__ == "__main__":
     unittest.main()
