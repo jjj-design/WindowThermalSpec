@@ -216,7 +216,36 @@ class TestCalcAzwjdtFunction(unittest.TestCase):
                 expected = AzwjdtA
                 self.assertAlmostEqual(actual, expected, delta=0.000000001)
 
+class SetWSSizeFunction(unittest.TestCase):
+    
+    # 正しい値が返ってくるかどうかのテスト
+    def test_assert(self):
+        
+        def convert(v):
+            try:
+                return float(v)
+            except:
+                return v
 
+        f = open('./test_case/WSSize.csv','r',encoding='utf8')
+        reader = csv.reader(f)
+        header = next(reader)
+        for i, row in enumerate(reader):
+            row_float = [ convert(d) for d in row]
+            case = row_float[0]
+            with self.subTest(case):
+                WSSizeA = row_float[1:19]
+                WSSize1 = row_float[19:]
+                if case < 35:
+                    WSSize = sun_position.set_WSSize(WSSize1)
+                    difWSSize = [a-b for (a,b) in zip(WSSize, WSSizeA)]
+                    actual = max(max(difWSSize),abs(min(difWSSize)))
+                    self.assertAlmostEqual(actual, 0.0, delta=0.000000001)
+                else:
+                    with self.assertRaises(ValueError) as cm:
+                        sun_position.set_WSSize(WSSize1)
+                        the_exception = cm.exception
+                        self.assertEqual(the_exception.error_code, 3)
 
 
 
