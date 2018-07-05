@@ -67,7 +67,7 @@ class TestCalcTdt(unittest.TestCase):
     # 正しい値が返ってくるかどうかのテスト
     def test_assert(self):
     
-        f = open('./TestConfig01/Tdt.csv','r',encoding='utf8')
+        f = open('./test_case/Tdt.csv','r',encoding='utf8')
         reader = csv.reader(f)
         header = next(reader)
         for i, row in enumerate(reader):
@@ -83,7 +83,7 @@ class TestCalcSinh(unittest.TestCase):
     # 正しい値が返ってくるかどうかのテスト
     def test_assert(self):
     
-        f = open('./TestConfig01/sinh.csv','r',encoding='utf8')
+        f = open('./test_case/sinh.csv','r',encoding='utf8')
         reader = csv.reader(f)
         header = next(reader)
         for i, row in enumerate(reader):
