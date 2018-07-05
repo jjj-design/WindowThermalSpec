@@ -1,3 +1,4 @@
+import nbimporter
 import effect_coefficient
 
 import unittest
