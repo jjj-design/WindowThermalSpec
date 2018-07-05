@@ -1,4 +1,3 @@
-import nbimporter
 import other_modules
 
 import unittest
