@@ -53,5 +53,23 @@ class TestCalcPhiypFunction(unittest.TestCase):
                 actual = effect_coefficient.calc_phiyp(WSSize)
                 expected = phiypA
                 self.assertAlmostEqual(actual,expected,delta=0.000000001)
+
+class TestCalcPhiymFunction(unittest.TestCase):
+    
+    # 正しい値が返ってくるかどうかのテスト
+    def test_assert(self):
+        f = open('./test_case/phiym.csv','r',encoding='utf8')
+        reader = csv.reader(f)
+        header = next(reader)
+        for row in reader:
+            row_float = [float(d) for d in row]
+            case, X1, X2, X3, X1yp, X1ym, X3yp, X3ym, Y1, Y2, Y3, Y1xp, Y1xm, Y3xp, Y3xm, Zxp, Zxm, Zyp, Zym, phiypA = tuple(row_float)
+            WSSize = [X1, X2, X3, X1yp, X1ym, X3yp, X3ym, Y1, Y2, Y3, Y1xp, Y1xm, Y3xp, Y3xm, Zxp, Zxm, Zyp, Zym]
+            with self.subTest(case = case):
+                actual = effect_coefficient.calc_phiym(WSSize)
+                expected = phiypA
+                self.assertAlmostEqual(actual,expected,delta=0.000000001)
+
+
 if __name__ == "__main__":
     unittest.main()
