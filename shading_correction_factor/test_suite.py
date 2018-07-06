@@ -5,6 +5,7 @@ import climate_test
 import direct_solar_area_test
 import effect_coefficient_test
 import sun_position_test
+import main_test
 
 def suite():
 
@@ -39,6 +40,7 @@ def suite():
     test_suite.addTest(unittest.makeSuite(sun_position_test.TestCalcAzwjdtFunction))
     test_suite.addTest(unittest.makeSuite(sun_position_test.SetWSSizeFunction))
 
+    test_suite.addTest(unittest.makeSuite(main_test.TestMain))
 
     return test_suite
 
