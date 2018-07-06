@@ -7,7 +7,7 @@ class TestCalcAoh0pFunction(unittest.TestCase):
     
     # 正しい値が返ってくるかどうかのテスト    
     def test_assert(self):
-        f = open('./TestConfig01/Aoh0p.csv','r',encoding='utf8')
+        f = open('./test_case/Aoh0p.csv','r',encoding='utf8')
         reader = csv.reader(f)
         header = next(reader)
         for i, row in enumerate(reader):
@@ -24,7 +24,7 @@ class TestCalcAsf0pFunction(unittest.TestCase):
                 
     # 正しい値が返ってくるかどうかのテスト    
     def test_assert(self):
-        f = open('./TestConfig01/Asf0p.csv','r',encoding='utf8')
+        f = open('./test_case/Asf0p.csv','r',encoding='utf8')
         reader = csv.reader(f)
         header = next(reader)
         for i, row in enumerate(reader):
@@ -41,7 +41,7 @@ class TestCalcAxpFunction(unittest.TestCase):
     
     # 正しい値が返ってくるかどうかのテスト    
     def test_assert(self):
-        f = open('./TestConfig01/Axp.csv','r',encoding='utf8')
+        f = open('./test_case/Axp.csv','r',encoding='utf8')
         reader = csv.reader(f)
         header = next(reader)
         for i, row in enumerate(reader):
@@ -58,7 +58,7 @@ class TestCalcAoh0mFunction(unittest.TestCase):
 
     # 正しい値が返ってくるかどうかのテスト    
     def test_assert(self):
-        f = open('./TestConfig01/Aoh0m.csv','r',encoding='utf8')
+        f = open('./test_case/Aoh0m.csv','r',encoding='utf8')
         reader = csv.reader(f)
         header = next(reader)
         for i, row in enumerate(reader):
@@ -75,7 +75,7 @@ class TestCalcAsf0mFunction(unittest.TestCase):
 
     # 正しい値が返ってくるかどうかのテスト    
     def test_assert(self):
-        f = open('./TestConfig01/Asf0m.csv','r',encoding='utf8')
+        f = open('./test_case/Asf0m.csv','r',encoding='utf8')
         reader = csv.reader(f)
         header = next(reader)
         for i, row in enumerate(reader):
@@ -92,7 +92,7 @@ class TestCalcAxmFunction(unittest.TestCase):
 
     # 正しい値が返ってくるかどうかのテスト    
     def test_assert(self):
-        f = open('./TestConfig01/Axm.csv','r',encoding='utf8')
+        f = open('./test_case/Axm.csv','r',encoding='utf8')
         reader = csv.reader(f)
         header = next(reader)
         for i, row in enumerate(reader):
