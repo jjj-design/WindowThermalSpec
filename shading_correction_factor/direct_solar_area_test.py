@@ -1,3 +1,4 @@
+import nbimporter
 import direct_solar_area
 
 import unittest
