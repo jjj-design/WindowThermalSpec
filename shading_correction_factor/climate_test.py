@@ -53,7 +53,7 @@ class TestCalcSdhmFunction(unittest.TestCase):
                 expected = SdhmA
                 self.assertAlmostEqual(actual, expected, delta=0.000000001)
 
-class TestInputIncidentAngleCharacteristicsFunction(unittest.TestCase):
+class TestGetIncidentAngleCharacteristicsFunction(unittest.TestCase):
     
     def compare(self, actual_row, expected_row):
         self.assertAlmostEqual(actual_row[0], expected_row[0], delta=0.000000001)
@@ -68,23 +68,12 @@ class TestInputIncidentAngleCharacteristicsFunction(unittest.TestCase):
         self.assertAlmostEqual(actual_row[3][6], expected_row[3][6], delta=0.000000001)
         self.assertAlmostEqual(actual_row[3][7], expected_row[3][7], delta=0.000000001)
     
-    def test_read_1(self):
-        actual_row = climate.input_IncidentAngleCharacteristics(0, "./SCFConfig01/", "IncidentAngleCharacteristics.csv")
-        expected_row = [0, 1, 1, np.array([1, 0, 0, 0, 0, 0, 0, 0])]
-        self.compare(actual_row, expected_row)
-
-    def test_read_2(self):
-        actual_row = climate.input_IncidentAngleCharacteristics(1, "./SCFConfig01/", "IncidentAngleCharacteristics.csv")
+    def test_assert(self):
+        iac = climate.get_incident_angle_characteristics()
+        actual_row = [1, iac.eta_max, iac.eta_isr, np.array(iac.eta_kk)]
         expected_row = [1, 0.88, 0.808, np.array([0, 2.392, 0, -3.8636, 0, 3.7568, 0, -1.3952])]
         self.compare(actual_row, expected_row)
-        
-    # 定義されていない index が渡されたときにエラーを返すことを確認するテスト
-    def test_exception(self):
-        with self.assertRaises(ValueError) as cm:
-            climate.input_IncidentAngleCharacteristics(2, "./SCFConfig01/", "IncidentAngleCharacteristics.csv")
-            the_exception = cm.exception
-            self.assertEqual(the_exception.error_code, 3)
-
+       
 class TestCalcEtajdtFunction(unittest.TestCase):
     
     # 正しい値が返ってくるかどうかのテスト    

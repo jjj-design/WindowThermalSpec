@@ -1,6 +1,9 @@
 import nbimporter
 import csv
+import unittest
+
 import Shading_Correction_Factor_Main as SCFMain
+
 
 class TestMain(unittest.TestCase):
     
@@ -29,11 +32,13 @@ class TestMain(unittest.TestCase):
             WSSize = [float(r) for r in row[8:-2]]
             SCFhA, SCFcA = [float(r) for r in row[-2:] ]
             with self.subTest(case = case):
-                SCF = SCFMain.Calc_ShadingCorrectionFactor(Path00, FileName00, FileName01, ClimateZone, NDT, etaID, Azimuth, WSSize )
-                SCFh, SCFc = SCF[2][-1][-1], SCF[2][-2][-1]
-                print(case)
-                self.assertAlmostEqual(SCFh, SCFhA, delta=0.000000001)
-                self.assertAlmostEqual(SCFc, SCFcA, delta=0.000000001)
+                # テスト時間がかかるため便宜的にiは4までとする。
+                if i < 5:
+                    SCF = SCFMain.Calc_ShadingCorrectionFactor(Path00, FileName00, FileName01, ClimateZone, NDT, etaID, Azimuth, WSSize )
+                    SCFh, SCFc = SCF[2][-1][-1], SCF[2][-2][-1]
+                    print(case)
+                    self.assertAlmostEqual(SCFh, SCFhA, delta=0.000000001)
+                    self.assertAlmostEqual(SCFc, SCFcA, delta=0.000000001)
 
 if __name__ == "__main__":
     unittest.main()

@@ -12,7 +12,7 @@ def suite():
 
     test_suite.addTest(unittest.makeSuite(climate_test.TestCalcNhFunction))
     test_suite.addTest(unittest.makeSuite(climate_test.TestCalcSdhmFunction))
-    test_suite.addTest(unittest.makeSuite(climate_test.TestInputIncidentAngleCharacteristicsFunction))
+    test_suite.addTest(unittest.makeSuite(climate_test.TestGetIncidentAngleCharacteristicsFunction))
     test_suite.addTest(unittest.makeSuite(climate_test.TestCalcEtajdtFunction))
 
     test_suite.addTest(unittest.makeSuite(direct_solar_area_test.TestCalcAoh0pFunction))
