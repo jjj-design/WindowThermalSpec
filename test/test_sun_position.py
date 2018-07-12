@@ -1,7 +1,9 @@
 import nbimporter
 import unittest
 import csv
+import sys
 
+sys.path.append('../')
 from module import sun_position
 
 TEST_DIRECTORY = './test/test_case/'
