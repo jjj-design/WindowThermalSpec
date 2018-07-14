@@ -6,6 +6,7 @@ import sys
 
 sys.path.append('../')
 from module import climate
+from module import sun_position
 
 TEST_DIRECTORY = './test/test_case/'
 
@@ -20,25 +21,64 @@ class TestCalcNhFunction(unittest.TestCase):
             row_float = [float(d) for d in row]
             case, Latitude, Longitude, NDay, NHour, NDT, NhA = tuple(row_float)
             with self.subTest(case = case):
-                actual = climate.calc_Nh(Latitude, Longitude, NDay, NHour, NDT)
+                sinh = [sun_position.calc_sinh(
+                        Latitude,
+                        sun_position.calc_deltad(NDay),
+                        sun_position.calc_Tdt(Longitude,
+                                              sun_position.calc_eed(NDay),
+                                              sun_position.calc_TT(NHour, NDT, MM))
+                        ) for MM in range(int(NDT))
+                        ]
+                prev_sinh = [sun_position.calc_sinh(
+                        Latitude,
+                        sun_position.calc_deltad(NDay),
+                        sun_position.calc_Tdt(Longitude,
+                                              sun_position.calc_eed(NDay),
+                                              sun_position.calc_TT(NHour-1, NDT, MM))
+                        ) for MM in range(int(NDT))
+                        ]
+                actual = climate.calc_Nh(sinh, prev_sinh, NDT)
                 expected = NhA
                 self.assertAlmostEqual(actual, expected, delta=0.000000001)
     
     # NDT = 1 だった場合のテスト
     def test_NDT_is_1_assert(self):
 
-        actual1 = climate.calc_Nh(35, 135, 121, 6, 1)
+        latitude = 35
+        longitude = 135
+        nday = 121
+        NDT = 1
+        
+        nhour1 = 6
+        sinh = [sun_position.calc_sinh(
+                latitude,
+                sun_position.calc_deltad(nday),
+                sun_position.calc_Tdt(longitude,
+                                      sun_position.calc_eed(nday),
+                                      sun_position.calc_TT(nhour1, NDT, MM))
+                ) for MM in range(int(NDT))
+                ]
+        actual1 = climate.calc_Nh(sinh, None, NDT)
         expected1 = 1
         self.assertAlmostEqual(actual1, expected1, delta=0.000000001)
 
-        actual2 = climate.calc_Nh(35, 135, 121, 5, 1)
+        nhour2 = 5
+        sinh = [sun_position.calc_sinh(
+                latitude,
+                sun_position.calc_deltad(nday),
+                sun_position.calc_Tdt(longitude,
+                                      sun_position.calc_eed(nday),
+                                      sun_position.calc_TT(nhour2, NDT, MM))
+                ) for MM in range(int(NDT))
+                ]
+        actual2 = climate.calc_Nh(sinh, None, NDT)
         expected2 = 0
         self.assertAlmostEqual(actual2, expected2, delta=0.000000001)
     
     # NDT が1以外の奇数を指定された場合にエラーが発生することを確認するためのテスト
     def test_exception(self):
         with self.assertRaises(ValueError) as cm:
-            climate.calc_Nh(35, 135, 121, 6, 5)
+            climate.calc_Nh(None, None, 5)
             the_exception = cm.exception
             self.assertEqual(the_exception.error_code, 3)
 
