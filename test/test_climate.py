@@ -3,6 +3,7 @@ import unittest
 import csv
 import numpy as np
 import sys
+import math
 
 sys.path.append('../')
 from module import climate
@@ -21,21 +22,21 @@ class TestCalcNhFunction(unittest.TestCase):
             row_float = [float(d) for d in row]
             case, Latitude, Longitude, NDay, NHour, NDT, NhA = tuple(row_float)
             with self.subTest(case = case):
-                sinh = [sun_position.calc_sinh(
-                        Latitude,
-                        sun_position.calc_deltad(NDay),
-                        sun_position.calc_Tdt(Longitude,
-                                              sun_position.calc_eed(NDay),
-                                              sun_position.calc_TT(NHour, NDT, MM))
-                        ) for MM in range(int(NDT))
+                sinh = [sun_position.calc_hs(
+                        math.radians(Latitude),
+                        math.radians(sun_position.calc_deltad(NDay)),
+                        math.radians(sun_position.calc_Tdt(Longitude,
+                                                           sun_position.calc_eed(NDay),
+                                                           sun_position.calc_TT(NHour, NDT, MM)))
+                        )[1] for MM in range(int(NDT))
                         ]
-                prev_sinh = [sun_position.calc_sinh(
-                        Latitude,
-                        sun_position.calc_deltad(NDay),
-                        sun_position.calc_Tdt(Longitude,
+                prev_sinh = [sun_position.calc_hs(
+                        math.radians(Latitude),
+                        math.radians(sun_position.calc_deltad(NDay)),
+                        math.radians(sun_position.calc_Tdt(Longitude,
                                               sun_position.calc_eed(NDay),
-                                              sun_position.calc_TT(NHour-1, NDT, MM))
-                        ) for MM in range(int(NDT))
+                                              sun_position.calc_TT(NHour-1, NDT, MM)))
+                        )[1] for MM in range(int(NDT))
                         ]
                 actual = climate.calc_Nh(sinh, prev_sinh, NDT)
                 expected = NhA
@@ -50,26 +51,26 @@ class TestCalcNhFunction(unittest.TestCase):
         NDT = 1
         
         nhour1 = 6
-        sinh = [sun_position.calc_sinh(
-                latitude,
-                sun_position.calc_deltad(nday),
-                sun_position.calc_Tdt(longitude,
+        sinh = [sun_position.calc_hs(
+                math.radians(latitude),
+                math.radians(sun_position.calc_deltad(nday)),
+                math.radians(sun_position.calc_Tdt(longitude,
                                       sun_position.calc_eed(nday),
-                                      sun_position.calc_TT(nhour1, NDT, MM))
-                ) for MM in range(int(NDT))
+                                      sun_position.calc_TT(nhour1, NDT, MM)))
+                )[1] for MM in range(int(NDT))
                 ]
         actual1 = climate.calc_Nh(sinh, None, NDT)
         expected1 = 1
         self.assertAlmostEqual(actual1, expected1, delta=0.000000001)
 
         nhour2 = 5
-        sinh = [sun_position.calc_sinh(
-                latitude,
-                sun_position.calc_deltad(nday),
-                sun_position.calc_Tdt(longitude,
+        sinh = [sun_position.calc_hs(
+                math.radians(latitude),
+                math.radians(sun_position.calc_deltad(nday)),
+                math.radians(sun_position.calc_Tdt(longitude,
                                       sun_position.calc_eed(nday),
-                                      sun_position.calc_TT(nhour2, NDT, MM))
-                ) for MM in range(int(NDT))
+                                      sun_position.calc_TT(nhour2, NDT, MM)))
+                )[1] for MM in range(int(NDT))
                 ]
         actual2 = climate.calc_Nh(sinh, None, NDT)
         expected2 = 0
