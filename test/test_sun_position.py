@@ -160,7 +160,12 @@ class TestCalcAzsdtFunction(unittest.TestCase):
                 hs, sin_hs, cos_hs = sun_position.calc_hs(math.radians(Latitude),
                                                           math.radians(deltad),
                                                           math.radians(Tdt))
-                actual = sun_position.calc_Azsdt(Latitude, deltad, Tdt, sin_hs, cos_hs)
+                actual = math.degrees(
+                        sun_position.calc_Azs(math.radians(Latitude),
+                                              math.radians(deltad),
+                                              math.radians(Tdt),
+                                              hs)
+                        )
                 expected = AzsdtA
                 self.assertAlmostEqual(actual, expected, delta=0.000000001)
             
@@ -223,7 +228,12 @@ class TestCalcAzwjdtFunction(unittest.TestCase):
                 hs, sinh, cosh = sun_position.calc_hs(math.radians(Latitude),
                                                       math.radians(deltad),
                                                       math.radians(Tdt))
-                Azsdt = sun_position.calc_Azsdt(Latitude, deltad, Tdt, sinh, cosh)
+                Azsdt = math.degrees(
+                        sun_position.calc_Azs(math.radians(Latitude),
+                                              math.radians(deltad),
+                                              math.radians(Tdt),
+                                              hs)
+                        )
                 actual = sun_position.calc_Azwjdt(Azwj, Azsdt)
                 expected = AzwjdtA
                 self.assertAlmostEqual(actual, expected, delta=0.000000001)
