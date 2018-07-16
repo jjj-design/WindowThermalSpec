@@ -24,7 +24,7 @@ class TestCalcNhFunction(unittest.TestCase):
             with self.subTest(case = case):
                 sinh = [sun_position.calc_hs(
                         math.radians(Latitude),
-                        math.radians(sun_position.calc_deltad(NDay)),
+                        sun_position.calc_deltad(NDay),
                         sun_position.calc_Tdt(math.radians(Longitude),
                                               sun_position.calc_eed(NDay),
                                               sun_position.calc_TT(NHour, NDT, MM),
@@ -33,7 +33,7 @@ class TestCalcNhFunction(unittest.TestCase):
                         ]
                 prev_sinh = [sun_position.calc_hs(
                         math.radians(Latitude),
-                        math.radians(sun_position.calc_deltad(NDay)),
+                        sun_position.calc_deltad(NDay),
                         sun_position.calc_Tdt(math.radians(Longitude),
                                               sun_position.calc_eed(NDay),
                                               sun_position.calc_TT(NHour-1, NDT, MM),
@@ -55,7 +55,7 @@ class TestCalcNhFunction(unittest.TestCase):
         nhour1 = 6
         sinh = [sun_position.calc_hs(
                 math.radians(latitude),
-                math.radians(sun_position.calc_deltad(nday)),
+                sun_position.calc_deltad(nday),
                 sun_position.calc_Tdt(math.radians(longitude),
                                       sun_position.calc_eed(nday),
                                       sun_position.calc_TT(nhour1, NDT, MM),
@@ -69,7 +69,7 @@ class TestCalcNhFunction(unittest.TestCase):
         nhour2 = 5
         sinh = [sun_position.calc_hs(
                 math.radians(latitude),
-                math.radians(sun_position.calc_deltad(nday)),
+                sun_position.calc_deltad(nday),
                 sun_position.calc_Tdt(math.radians(longitude),
                                       sun_position.calc_eed(nday),
                                       sun_position.calc_TT(nhour2, NDT, MM),

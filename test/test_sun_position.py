@@ -48,7 +48,7 @@ class TestCalcDeltadFunction(unittest.TestCase):
             row_float = [float(d) for d in row]
             case, NDay, deltadA = tuple(row_float)
             with self.subTest(case = case):
-                actual = sun_position.calc_deltad(NDay)
+                actual = math.degrees(sun_position.calc_deltad(NDay))
                 expected = deltadA
                 self.assertAlmostEqual(actual, expected, delta=0.000000001)
 
@@ -100,7 +100,7 @@ class TestCalcSinhFunction(unittest.TestCase):
             case, Latitude, Longitude, NDay, TT, sinhA = tuple(row_float)
             with self.subTest(case = case):
                 actual = sun_position.calc_hs(math.radians(Latitude),
-                                              math.radians(sun_position.calc_deltad(NDay)),
+                                              sun_position.calc_deltad(NDay),
                                               sun_position.calc_Tdt(math.radians(Longitude),
                                                                     sun_position.calc_eed(NDay),
                                                                     TT,
@@ -123,7 +123,7 @@ class TestCalcCoshFunction(unittest.TestCase):
             case, Latitude, Longitude, NDay, TT, coshA = tuple(row_float)
             with self.subTest(case = case):
                 actual = sun_position.calc_hs(math.radians(Latitude),
-                                              math.radians(sun_position.calc_deltad(NDay)),
+                                              sun_position.calc_deltad(NDay),
                                               sun_position.calc_Tdt(math.radians(Longitude),
                                                                     sun_position.calc_eed(NDay),
                                                                     TT,
@@ -146,7 +146,7 @@ class TestCalcHsdtAFunction(unittest.TestCase):
             case, Latitude, Longitude, NDay, TT, hsdtA = tuple(row_float)
             with self.subTest(case = case):
                 hs = sun_position.calc_hs(math.radians(Latitude),
-                                          math.radians(sun_position.calc_deltad(NDay)),
+                                          sun_position.calc_deltad(NDay),
                                           sun_position.calc_Tdt(math.radians(Longitude),
                                                                 sun_position.calc_eed(NDay),
                                                                 TT,
@@ -173,13 +173,10 @@ class TestCalcAzsdtFunction(unittest.TestCase):
                 eed = sun_position.calc_eed(NDay)
                 Tdt = sun_position.calc_Tdt(math.radians(Longitude), eed, TT, math.radians(135.0)) 
                 hs, sin_hs, cos_hs = sun_position.calc_hs(math.radians(Latitude),
-                                                          math.radians(deltad),
-                                                          Tdt)
+                                                          deltad, Tdt)
                 actual = math.degrees(
                         sun_position.calc_Azs(math.radians(Latitude),
-                                              math.radians(deltad),
-                                              Tdt,
-                                              hs)
+                                              deltad, Tdt, hs)
                         )
                 expected = AzsdtA
                 self.assertAlmostEqual(actual, expected, delta=0.000000001)
@@ -241,13 +238,10 @@ class TestCalcAzwjdtFunction(unittest.TestCase):
                 eed = sun_position.calc_eed(NDay)
                 Tdt = sun_position.calc_Tdt(math.radians(Longitude), eed, TT, math.radians(135.0)) 
                 hs, sinh, cosh = sun_position.calc_hs(math.radians(Latitude),
-                                                      math.radians(deltad),
-                                                      Tdt)
+                                                      deltad, Tdt)
                 Azsdt = math.degrees(
                         sun_position.calc_Azs(math.radians(Latitude),
-                                              math.radians(deltad),
-                                              Tdt,
-                                              hs)
+                                              deltad, Tdt, hs)
                         )
                 actual = sun_position.calc_Azwjdt(Azwj, Azsdt)
                 expected = AzwjdtA
