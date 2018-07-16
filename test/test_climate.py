@@ -11,6 +11,33 @@ from module import sun_position
 
 TEST_DIRECTORY = './test/test_case/'
 
+class TestCalcNDayNHourFunction(unittest.TestCase):
+    
+    # 正しい値が返ってくるかどうかのテスト    
+    def test_assert(self):
+        f = open(TEST_DIRECTORY + 'NDayNHour.csv','r',encoding='utf8')
+        reader = csv.reader(f)
+        header = next(reader)
+        for i, row in enumerate(reader):
+            row_float = [float(d) for d in row]
+            Hour00, NdayA, NhourA = tuple(row_float)
+            with self.subTest(Hour00 = Hour00):
+                actual = climate.calc_NDayNHour(Hour00)
+                expected = (NdayA, NhourA)
+                self.assertAlmostEqual(actual[0], expected[0], delta=0.000000001)
+                self.assertAlmostEqual(actual[1], expected[1], delta=0.000000001)
+
+class TestCalcTTFunction(unittest.TestCase):
+    
+    # 正しい値が返ってくるかどうかのテスト    
+    def test_assert(self):
+        NDT = 6
+        for NHour in range(0,24):
+            for MM in range(0,NDT):
+                actual = climate.calc_TT(NHour, NDT, MM)
+                expected = NHour + MM / 6
+                self.assertAlmostEqual(actual, expected, delta=0.000000001)
+
 class TestCalcNhFunction(unittest.TestCase):
     
     # 正しい値が返ってくるかどうかのテスト    
@@ -27,7 +54,7 @@ class TestCalcNhFunction(unittest.TestCase):
                         sun_position.calc_deltad(NDay),
                         sun_position.calc_Tdt(math.radians(Longitude),
                                               sun_position.calc_eed(NDay),
-                                              sun_position.calc_TT(NHour, NDT, MM),
+                                              climate.calc_TT(NHour, NDT, MM),
                                               math.radians(135.0))
                         )[1] for MM in range(int(NDT))
                         ]
@@ -36,7 +63,7 @@ class TestCalcNhFunction(unittest.TestCase):
                         sun_position.calc_deltad(NDay),
                         sun_position.calc_Tdt(math.radians(Longitude),
                                               sun_position.calc_eed(NDay),
-                                              sun_position.calc_TT(NHour-1, NDT, MM),
+                                              climate.calc_TT(NHour-1, NDT, MM),
                                               math.radians(135.0))
                         )[1] for MM in range(int(NDT))
                         ]
@@ -58,7 +85,7 @@ class TestCalcNhFunction(unittest.TestCase):
                 sun_position.calc_deltad(nday),
                 sun_position.calc_Tdt(math.radians(longitude),
                                       sun_position.calc_eed(nday),
-                                      sun_position.calc_TT(nhour1, NDT, MM),
+                                      climate.calc_TT(nhour1, NDT, MM),
                                       math.radians(135.0))
                 )[1] for MM in range(int(NDT))
                 ]
@@ -72,7 +99,7 @@ class TestCalcNhFunction(unittest.TestCase):
                 sun_position.calc_deltad(nday),
                 sun_position.calc_Tdt(math.radians(longitude),
                                       sun_position.calc_eed(nday),
-                                      sun_position.calc_TT(nhour2, NDT, MM),
+                                      climate.calc_TT(nhour2, NDT, MM),
                                       math.radians(135.0))
                 )[1] for MM in range(int(NDT))
                 ]

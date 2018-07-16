@@ -156,8 +156,7 @@
 
 * shading_effect_factor
 <-- climate
-<-- sun_position
---> Shading_Correction_Factor_Calculation
+--> Shading_Correction_Factor_Main
 
 ### 共通モジュール
 
@@ -165,4 +164,3 @@
 --> K系:SolarPosition(SP)
 --> N系:climate
 --> N系:Shading_Correction_Factor_Main
---> N系:shading_effect_factor
