@@ -3,6 +3,8 @@
 ## 計算ファイルの依存関係整理
 (<--:引用、-->:被引用)  
 
+### K系プログラム
+
 * jjj_shg_spec(main)  
 <-- WEA  
 <-- SP  
@@ -35,6 +37,7 @@
 --> SG2BDR(only in Example)  
 --> main  
 <-- WEA(only in Example)  
+<-- sun_position
 
 * DivisionDiffuseRatio(DDR)  
 --> TSRTG  
@@ -126,3 +129,40 @@
 * HourlyGvalueOfWindow(HGOW)  
 --> None  
 <-- None  
+
+### N系プログラム
+
+* climate
+<-- sun_position
+--> Shading_Correction_Factor_Calculation
+--> shading_effect_factor
+
+* direct_solar_area
+--> Shading_Correction_Factor_Calculation
+
+* effect_coefficient
+--> Shading_Correction_Factor_Calculation
+
+* Shading_Correction_Factor_Calculation
+<-- Shading_Correction_Factor_Main
+
+* Shading_Correction_Factor_Main
+<-- climate
+<-- effect_coefficient
+<-- sun_position
+<-- direct_solar_area
+<-- shading_effect_factor
+--> Shading_Correction_Factor_Calculation
+
+* shading_effect_factor
+<-- climate
+<-- sun_position
+--> Shading_Correction_Factor_Calculation
+
+### 共通モジュール
+
+* sun_position
+--> K系:SolarPosition(SP)
+--> N系:climate
+--> N系:Shading_Correction_Factor_Main
+--> N系:shading_effect_factor
