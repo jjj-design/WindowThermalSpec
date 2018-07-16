@@ -154,47 +154,6 @@ class TestCalcAzsdtFunction(unittest.TestCase):
                 expected = AzsdtA
                 self.assertAlmostEqual(actual, expected, delta=0.000000001)
             
-class TestCalcAzwjFunction(unittest.TestCase):
-    
-    # 正しい値が返ってくるかどうかのテスト
-    def test_assert(self):
-
-        test_list = [
-                ('北北東', -157.5),
-                ('北東', -135.0),
-                ('東北東', -112.5),
-                ('東', -90.0),
-                ('東南東', -67.5),
-                ('南東', -45.0),
-                ('南南東', -22.5),
-                ('南', 0.0),
-                ('南南西', 22.5),
-                ('南西', 45.0),
-                ('西南西', 67.5),
-                ('西', 90.0),
-                ('西北西', 112.5),
-                ('北西', 135.0),
-                ('北北西', 157.5),
-                ('北', 180.0),
-                (-179.0, -179.0),
-                (180.0, 180.0),
-                ]
-        for i, row in enumerate(test_list):
-            azimuth, azwjA = tuple(row)
-            with self.subTest(azimuth=azimuth, azwjA=azwjA):
-                actual = sun_position.calc_Azwj(azimuth)
-                expected = azwjA
-                self.assertEqual(actual,expected)
-
-    # 間違った値が指定された場合にエラーが返ってくるかのテスト
-    # -180以下、および、180より大の値は許容されていない。
-    def test_exception(self):
-        azimuth = -180.1
-        with self.assertRaises(ValueError) as cm:
-            sun_position.calc_Azwj(azimuth)
-            the_exception = cm.exception
-            self.assertEqual(the_exception.error_code, 3)
-
 class TestCalcAzwjdtFunction(unittest.TestCase):
 
     # 正しい値が返ってくるかどうかのテスト
