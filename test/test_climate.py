@@ -25,17 +25,19 @@ class TestCalcNhFunction(unittest.TestCase):
                 sinh = [sun_position.calc_hs(
                         math.radians(Latitude),
                         math.radians(sun_position.calc_deltad(NDay)),
-                        math.radians(sun_position.calc_Tdt(Longitude,
-                                                           sun_position.calc_eed(NDay),
-                                                           sun_position.calc_TT(NHour, NDT, MM)))
+                        sun_position.calc_Tdt(math.radians(Longitude),
+                                              sun_position.calc_eed(NDay),
+                                              sun_position.calc_TT(NHour, NDT, MM),
+                                              math.radians(135.0))
                         )[1] for MM in range(int(NDT))
                         ]
                 prev_sinh = [sun_position.calc_hs(
                         math.radians(Latitude),
                         math.radians(sun_position.calc_deltad(NDay)),
-                        math.radians(sun_position.calc_Tdt(Longitude,
+                        sun_position.calc_Tdt(math.radians(Longitude),
                                               sun_position.calc_eed(NDay),
-                                              sun_position.calc_TT(NHour-1, NDT, MM)))
+                                              sun_position.calc_TT(NHour-1, NDT, MM),
+                                              math.radians(135.0))
                         )[1] for MM in range(int(NDT))
                         ]
                 actual = climate.calc_Nh(sinh, prev_sinh, NDT)
@@ -54,9 +56,10 @@ class TestCalcNhFunction(unittest.TestCase):
         sinh = [sun_position.calc_hs(
                 math.radians(latitude),
                 math.radians(sun_position.calc_deltad(nday)),
-                math.radians(sun_position.calc_Tdt(longitude,
+                sun_position.calc_Tdt(math.radians(longitude),
                                       sun_position.calc_eed(nday),
-                                      sun_position.calc_TT(nhour1, NDT, MM)))
+                                      sun_position.calc_TT(nhour1, NDT, MM),
+                                      math.radians(135.0))
                 )[1] for MM in range(int(NDT))
                 ]
         actual1 = climate.calc_Nh(sinh, None, NDT)
@@ -67,9 +70,10 @@ class TestCalcNhFunction(unittest.TestCase):
         sinh = [sun_position.calc_hs(
                 math.radians(latitude),
                 math.radians(sun_position.calc_deltad(nday)),
-                math.radians(sun_position.calc_Tdt(longitude,
+                sun_position.calc_Tdt(math.radians(longitude),
                                       sun_position.calc_eed(nday),
-                                      sun_position.calc_TT(nhour2, NDT, MM)))
+                                      sun_position.calc_TT(nhour2, NDT, MM),
+                                      math.radians(135.0))
                 )[1] for MM in range(int(NDT))
                 ]
         actual2 = climate.calc_Nh(sinh, None, NDT)
