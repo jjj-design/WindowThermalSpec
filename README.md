@@ -65,7 +65,7 @@
 --> main  
 <-- None  
 
-* MultipleReflectionOfSolarRadiation(MROSR)  
+* multiple_reflection  
 --> TSRTG  
 --> ASRIG  
 <-- None  
@@ -101,7 +101,7 @@
 * TransmittedSolarRadiationThroughGlazing(TSRTG)  
 <-- GAP  
 <-- RAP  
-<-- MROSR  
+<-- multiple_reflection  
 <-- DDR  
 <-- ISROG(only in Example)  
 --> main  
@@ -109,7 +109,7 @@
 * AbsorbedSolarRadiationIntoGlazing(ASRIG)  
 <-- GAP  
 <-- RAP  
-<-- MROSR  
+<-- multiple_reflection  
 <-- DDR  
 <-- ISROG(only in Example)  
 --> main  
