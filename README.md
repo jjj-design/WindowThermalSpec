@@ -12,7 +12,7 @@
 <-- SROTS  
 <-- GAP  
 <-- RAP  
-<-- HB  
+<-- glass_thermal_balance  
 <-- TU  
 <-- ISROG  
 <-- TSRTG  
@@ -70,23 +70,8 @@
 --> ASRIG  
 <-- None  
 
-* PaneResistance(PR)  
---> HB  
-<-- None  
-
-* ClosedCavityResistance(CCR)  
---> HB  
-<-- None  
-
-* SurfaceResistance(SR)  
---> HB  
-<-- None  
-
-* HeatBalance(HB)  
+* glass_thermal_balance  
 --> main  
-<-- PR  
-<-- CCR  
-<-- SR  
 
 * TransformUnit(TU)  
 --> main  
