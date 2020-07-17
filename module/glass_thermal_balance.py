@@ -335,7 +335,6 @@ class MixedAirProperty:
             density, kg/m3
         """
 
-
         return self.get_mixed_property(lambda air_type: get_rho(temp, air_type))
 
     def get_mu(self, temp: float) -> float:
