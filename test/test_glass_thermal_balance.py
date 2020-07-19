@@ -79,26 +79,29 @@ class GlassesTest(unittest.TestCase):
         self.assertAlmostEqual(g1.get_h_i(), 8.6198)
         self.assertAlmostEqual(g1.u, 1 / (1 / 20.4013 + 0.003 + 1 / 8.6198))
 
-        ts11, rs11 = g1.get_temp_and_r()
+        ts11, rs11, q11 = g1.get_temp_and_r()
         self.assertAlmostEqual(ts11[0], 5.8343075)
         self.assertAlmostEqual(ts11[1], 6.19138987)
         self.assertAlmostEqual(rs11[0], 0.04901648)
         self.assertAlmostEqual(rs11[1], 0.003)
         self.assertAlmostEqual(rs11[2], 0.11601197)
+        self.assertAlmostEqual(q11, 0.0)
 
-        ts12, rs12 = g1.get_temp_and_r(decision_air_layer_temp='calc')
+        ts12, rs12, q12 = g1.get_temp_and_r(decision_air_layer_temp='calc')
         self.assertAlmostEqual(ts12[0], 5.8343074991436135)
         self.assertAlmostEqual(ts12[1], 6.19138987189045)
         self.assertAlmostEqual(rs12[0], 0.04901648424365114)
         self.assertAlmostEqual(rs12[1], 0.003)
         self.assertAlmostEqual(rs12[2], 0.11601197243555535)
+        self.assertAlmostEqual(q12, 0.0)
 
-        ts13, rs13 = g1.get_temp_and_r(decision_air_layer_temp='calc', surface_method='JIS_A2103')
+        ts13, rs13, q13 = g1.get_temp_and_r(decision_air_layer_temp='calc', surface_method='JIS_A2103')
         self.assertAlmostEqual(ts13[0], 4.930922910138927)
         self.assertAlmostEqual(ts13[1], 5.285576406974733)
         self.assertAlmostEqual(rs13[0], 0.0417104832248979)
         self.assertAlmostEqual(rs13[1], 0.003)
         self.assertAlmostEqual(rs13[2], 0.12446873123466247)
+        self.assertAlmostEqual(q13, 0.0)
 
         g2 = t.Glass(
             gls=[
@@ -114,7 +117,7 @@ class GlassesTest(unittest.TestCase):
             ]
         )
 
-        ts21, rs21 = g2.get_temp_and_r()
+        ts21, rs21, q21 = g2.get_temp_and_r()
         self.assertAlmostEqual(ts21[0], 3.175647357828053)
         self.assertAlmostEqual(ts21[1], 3.370009361151825)
         self.assertAlmostEqual(ts21[2], 12.289531539304013)
@@ -124,8 +127,9 @@ class GlassesTest(unittest.TestCase):
         self.assertAlmostEqual(rs21[2], 0.13767385639610663)
         self.assertAlmostEqual(rs21[3], 0.003)
         self.assertAlmostEqual(rs21[4], 0.11601197)
+        self.assertAlmostEqual(q21, 0.0)
 
-        ts22, rs22 = g2.get_temp_and_r(decision_air_layer_temp='calc')
+        ts22, rs22, q22 = g2.get_temp_and_r(decision_air_layer_temp='calc')
         self.assertAlmostEqual(ts22[0], 3.155786765808591)
         self.assertAlmostEqual(ts22[1], 3.3489332234444635)
         self.assertAlmostEqual(ts22[2], 12.337753035938128)
@@ -135,8 +139,9 @@ class GlassesTest(unittest.TestCase):
         self.assertAlmostEqual(rs22[2], 0.1396166399713072)
         self.assertAlmostEqual(rs22[3], 0.003)
         self.assertAlmostEqual(rs22[4], 0.11601197)
+        self.assertAlmostEqual(q22, 0.0)
 
-        ts23, rs23 = g2.get_temp_and_r(decision_air_layer_temp='calc', surface_method='JIS_A2103')
+        ts23, rs23, q23 = g2.get_temp_and_r(decision_air_layer_temp='calc', surface_method='JIS_A2103')
         self.assertAlmostEqual(ts23[0], 2.6973848458545606)
         self.assertAlmostEqual(ts23[1], 2.891001359287642)
         self.assertAlmostEqual(ts23[2], 11.929054072139444)
@@ -146,6 +151,7 @@ class GlassesTest(unittest.TestCase):
         self.assertAlmostEqual(rs23[2], 0.14004052473525078)
         self.assertAlmostEqual(rs23[3], 0.003)
         self.assertAlmostEqual(rs23[4], 0.1220556440370072)
+        self.assertAlmostEqual(q23, 0.0)
 
         g3 = t.Glass(
             gls=[
@@ -209,7 +215,7 @@ class GlassesTest(unittest.TestCase):
             ]
         )
 
-        theta, reg = g.get_temp_and_r(
+        theta, reg, r_qin = g.get_temp_and_r(
             theta_e=30.0,
             theta_i=25.0,
             surface_method='JIS_A2103',
@@ -233,6 +239,7 @@ class GlassesTest(unittest.TestCase):
         self.assertAlmostEqual(reg[5], 0.003)
         self.assertAlmostEqual(reg[6], 0.1317437)
 
+        self.assertAlmostEqual(r_qin, 8.176926528527648)
 
 if __name__ == '__main__':
     unittest.main()

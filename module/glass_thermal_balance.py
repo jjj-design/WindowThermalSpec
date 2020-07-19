@@ -804,6 +804,20 @@ class Glass:
     def u(self):
         return self.get_heat_transmittance()
 
+    def get_r_qin(self, ia: np.ndarray, reg: np.ndarray):
+
+        # number of glasses
+        n = self._n_gl
+
+        n_in = np.array([
+            (np.sum(reg[0: 2 * j + 1]) + reg[2 * j + 1] / 2.0) / np.sum(reg)
+            for j in range(n)
+        ])
+
+        r_qin = np.sum(ia * n_in)
+
+        return r_qin
+
     def get_temp_and_r(
             self, theta_e: float = 0.0, theta_i: float = 20.0,
             surface_method: str = 'JIS_R3107',
@@ -835,14 +849,15 @@ class Glass:
         # number of glasses
         n = self._n_gl
 
-        # absorbed solar radiation on the surface, W/m2
-        q_b = np.zeros(2 * n)
+        # solar radiation, W/m2
+        ia2 = np.zeros(n)
         if ia is None:
             pass
         else:
-            for j in range(0, n):
-                q_b[2 * j] = ia[j] / 2.0
-                q_b[2 * j + 1] = ia[j] / 2.0
+            ia2 = ia
+
+        # absorbed solar radiation on the surface, W/m2
+        q_b = ia2.repeat(2) / 2.0
 
         def get_r(theta: np.ndarray) -> np.ndarray:
             """
@@ -951,9 +966,16 @@ class Glass:
 
         result = optimize.root(get_heat_flow, np.full(2 * n, (theta_e + theta_i) / 2))
 
+        # surface temperature, degree C, [number of the surface]
         theta_g = result.x
 
-        return theta_g, get_r(theta_g)
+        # thermal registance, m2K/W, [number of the surface + 1]
+        reg = get_r(theta_g)
+
+        # inside heat flow of the absorbed solar radiation, W/m2
+        r_qin = self.get_r_qin(ia=ia2, reg=reg)
+
+        return theta_g, reg, r_qin
 
     @property
     def r(self) -> np.ndarray:
@@ -974,7 +996,7 @@ class Glass:
                 7 for triple glasses.
         """
 
-        _, r = self.get_temp_and_r()
+        _, r, _ = self.get_temp_and_r()
 
         return r
 
