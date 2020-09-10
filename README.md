@@ -10,8 +10,7 @@
 <-- SP  
 <-- SG2BDR  
 <-- SROTS  
-<-- GAP  
-<-- RAP  
+<-- oblique_incidence_property  
 <-- glass_thermal_balance  
 <-- TU  
 <-- ISROG  
@@ -20,6 +19,19 @@
 <-- SHTFG  
 <-- HGOG  
 
+* glass_thermal_balance  
+--> main  
+
+* multiple_reflection  
+--> TSRTG  
+--> ASRIG  
+<-- None  
+
+* oblique_incidence_property  
+--> TSRTG  
+--> ASRIG  
+--> main  
+<-- None  
 
 * Weather(WEA)  
 --> HCP(only in Example)  
@@ -53,26 +65,6 @@
 --> main  
 <-- WEA(only in Example)  
 
-* GlassAngularProperty(GAP)  
---> TSRTG  
---> ASRIG  
---> main  
-<-- None  
-
-* RollershadeAngularProperty(RAP)  
---> TSRTG  
---> ASRIG  
---> main  
-<-- None  
-
-* multiple_reflection  
---> TSRTG  
---> ASRIG  
-<-- None  
-
-* glass_thermal_balance  
---> main  
-
 * TransformUnit(TU)  
 --> main  
 <-- None  
@@ -84,16 +76,14 @@
 <-- None  
 
 * TransmittedSolarRadiationThroughGlazing(TSRTG)  
-<-- GAP  
-<-- RAP  
+<-- oblique_incidence_property  
 <-- multiple_reflection  
 <-- DDR  
 <-- ISROG(only in Example)  
 --> main  
 
 * AbsorbedSolarRadiationIntoGlazing(ASRIG)  
-<-- GAP  
-<-- RAP  
+<-- oblique_incidence_property  
 <-- multiple_reflection  
 <-- DDR  
 <-- ISROG(only in Example)  
