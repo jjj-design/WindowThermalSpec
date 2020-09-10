@@ -12,7 +12,7 @@ import IncidentSolarRadiationOnGlazing as ISROG
 import DivisionDiffuseRatio as DDR
 
 from module import multiple_reflection as mr
-from module import glass_angular_property as gap
+from module import oblique_incidence_property as oip
 
 # %% md
 
@@ -135,16 +135,8 @@ def actual_trans_beam(L, gl_type, phi_b):
     r_taub = 0.
     ly_in_b = np.empty(len(L), dtype=tuple)
     for j in range(0, len(L)):
-        if gl_type[j] == 0:  # ガラス
-            p = L[j].glass_ang_prop(phi=phi_b)
-            ly_in_b[j] = mr.SolarSpecSingleLayer(tau_f=p[0], tau_b=p[1], rho_f=p[2], rho_b=p[3])
-        elif gl_type[j] == 1:  # ロールスクリーン
-            ly_in_b[j] = mr.SolarSpecSingleLayer(
-                RAP.role_ang_prop(L[j], phi_b)[0],
-                RAP.role_ang_prop(L[j], phi_b)[1],
-                RAP.role_ang_prop(L[j], phi_b)[2],
-                RAP.role_ang_prop(L[j], phi_b)[3]
-            )
+        p = L[j].get_ang_prop(phi=phi_b)
+        ly_in_b[j] = mr.SolarSpecSingleLayer(tau_f=p[0], tau_b=p[1], rho_f=p[2], rho_b=p[3])
 
     return mr.get_total_solar_spec(ly_in_b).tau_f
 
@@ -163,16 +155,8 @@ def actual_trans_diffuse(L, gl_type, Nd_lat, Nd_lon):
             phi_d[l][m] = DDR.division_diffuse_ratio(dd_in)[3]  # 入射角
 
             for j in range(0, len(L)):
-                if gl_type[j] == 0:  # ガラス
-                    p = L[j].glass_ang_prop(phi=phi_d[l][m])
-                    ly_in_d[j] = mr.SolarSpecSingleLayer(tau_f=p[0], tau_b=p[1], rho_f=p[2], rho_b=p[3])
-                elif gl_type[j] == 1:  # ロールスクリーン
-                    ly_in_d[j] = mr.SolarSpecSingleLayer(
-                        RAP.role_ang_prop(L[j], phi_d[l][m])[0],
-                        RAP.role_ang_prop(L[j], phi_d[l][m])[1],
-                        RAP.role_ang_prop(L[j], phi_d[l][m])[2],
-                        RAP.role_ang_prop(L[j], phi_d[l][m])[3]
-                    )
+                p = L[j].get_ang_prop(phi=phi_d[l][m])
+                ly_in_d[j] = mr.SolarSpecSingleLayer(tau_f=p[0], tau_b=p[1], rho_f=p[2], rho_b=p[3])
 
             tau_d[l][m] = mr.get_total_solar_spec(ly_in_d).tau_f
 
@@ -195,16 +179,8 @@ def actual_trans_reflect(L, gl_type, Nr_lat, Nr_lon):
             phi_r[l][m] = DDR.division_reflect_ratio(dr_in)[3]  # 入射角
 
             for j in range(0, len(L)):
-                if gl_type[j] == 0:  # ガラス
-                    p = L[j].glass_ang_prop(phi=phi_r[l][m])
-                    ly_in_r[j] = mr.SolarSpecSingleLayer(tau_f=p[0], tau_b=p[1], rho_f=p[2], rho_b=p[3])
-                elif gl_type[j] == 1:  # ロールスクリーン
-                    ly_in_r[j] = mr.SolarSpecSingleLayer(
-                        RAP.role_ang_prop(L[j], phi_r[l][m])[0],
-                        RAP.role_ang_prop(L[j], phi_r[l][m])[1],
-                        RAP.role_ang_prop(L[j], phi_r[l][m])[2],
-                        RAP.role_ang_prop(L[j], phi_r[l][m])[3]
-                    )
+                p = L[j].rap.get_ang_prop(phi=phi_r[l][m])
+                ly_in_r[j] = mr.SolarSpecSingleLayer(tau_f=p[0], tau_b=p[1], rho_f=p[2], rho_b=p[3])
 
             tau_r[l][m] = mr.get_total_solar_spec(ly_in_r).tau_f
 
@@ -225,9 +201,9 @@ if __name__ == '__main__':
 
     # 面材ごとの光学特性
     gl_in = [
-        gap.GlassInput(trs_0_f=0.815, trs_0_b=0.815, ref_0_f=0.072, ref_0_b=0.072, gtype=0, c_type_f=False, c_type_b=False),
-        gap.GlassInput(trs_0_f=0.815, trs_0_b=0.815, ref_0_f=0.072, ref_0_b=0.072, gtype=0, c_type_f=False, c_type_b=False),
-        RAP.role_input(0.3, 0.3, 0.63, 0.63)
+        oip.GlassInput(trs_0_f=0.815, trs_0_b=0.815, ref_0_f=0.072, ref_0_b=0.072, gtype=0, c_type_f=False, c_type_b=False),
+        oip.GlassInput(trs_0_f=0.815, trs_0_b=0.815, ref_0_f=0.072, ref_0_b=0.072, gtype=0, c_type_f=False, c_type_b=False),
+        oip.RoleInput(trs_0_f=0.3, trs_0_b=0.3, ref_0_f=0.63, ref_0_b=0.63)
     ]
 
     # 斜面日射量

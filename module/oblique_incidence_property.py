@@ -34,7 +34,7 @@ class GlassInput:
         self._c_type_f = c_type_f
         self._c_type_b = c_type_b
 
-    def glass_ang_prop(self, phi: float):
+    def get_ang_prop(self, phi: float) -> (float, float, float, float):
         """
         入射角φの日射透過率及び日射反射率の計算
         Args:
@@ -113,3 +113,32 @@ class GlassInput:
         else:
 
             raise ValueError
+
+
+class RoleInput:
+
+    def __init__(self, trs_0_f: float, trs_0_b: float, ref_0_f: float, ref_0_b: float):
+        """
+
+        Args:
+            trs_0_f: 正面側からの入射光に対する垂直入射時の日射透過率
+            trs_0_b: 背面側からの入射光に対する垂直入射時の日射透過率
+            ref_0_f: 正面側からの入射光に対する垂直入射時の日射反射率
+            ref_0_b: 背面側からの入射光に対する垂直入射時の日射反射率
+        """
+
+        self._trs_0_f = trs_0_f
+        self._trs_0_b = trs_0_b
+        self._ref_0_f = ref_0_f
+        self._ref_0_b = ref_0_b
+
+    #
+    def get_ang_prop(self, phi):
+        """
+        入射角φの日射透過率及び日射反射率の計算
+        Args:
+            phi: 入射角
+        Returns:
+            日射反射率
+        """
+        return self._trs_0_f, self._trs_0_b, self._ref_0_f, self._ref_0_b
