@@ -19,6 +19,11 @@
 <-- SHTFG  
 <-- HGOG  
 
+* division_diffuse_ratio  
+--> TSRTG  
+--> ASRIG   
+<-- None  
+
 * glass_thermal_balance  
 --> main  
 
@@ -51,11 +56,6 @@
 <-- WEA(only in Example)  
 <-- sun_position
 
-* DivisionDiffuseRatio(DDR)  
---> TSRTG  
---> ASRIG   
-<-- None  
-
 * SplittingGlobal2BeamDiffuseRadiation(SG2BDR)  
 --> main  
 <-- WEA(only in Example)  
@@ -78,14 +78,14 @@
 * TransmittedSolarRadiationThroughGlazing(TSRTG)  
 <-- oblique_incidence_property  
 <-- multiple_reflection  
-<-- DDR  
+<-- division_diffuse_ratio  
 <-- ISROG(only in Example)  
 --> main  
 
 * AbsorbedSolarRadiationIntoGlazing(ASRIG)  
 <-- oblique_incidence_property  
 <-- multiple_reflection  
-<-- DDR  
+<-- division_diffuse_ratio  
 <-- ISROG(only in Example)  
 --> main  
 
