@@ -2,7 +2,28 @@ import math
 from typing import List
 
 
-class GlassInput:
+class ObliqueIncidenceProperty:
+
+    def __init__(self):
+        pass
+
+    def get_ang_prop(self, phi: float) -> (float, float, float, float):
+        """
+        入射角φの日射透過率及び日射反射率の計算
+        Args:
+            phi:入射角, degree
+        Returns:
+            以下のタプル:
+                trs_0_f: 正面側からの入射光に対する垂直入射時の日射透過率
+                trs_0_b: 背面側からの入射光に対する垂直入射時の日射透過率
+                ref_0_f: 正面側からの入射光に対する垂直入射時の日射反射率
+                ref_0_b: 背面側からの入射光に対する垂直入射時の日射反射率
+        """
+
+        pass
+
+
+class GlassInput(ObliqueIncidenceProperty):
 
     def __init__(
             self,
@@ -26,6 +47,8 @@ class GlassInput:
             c_type_b: 背面側の膜の有無（FALSE：膜なし、TRUE：膜あり）
         """
 
+        super().__init__()
+
         self._trs_0_f = trs_0_f
         self._trs_0_b = trs_0_b
         self._ref_0_f = ref_0_f
@@ -40,7 +63,11 @@ class GlassInput:
         Args:
             phi:入射角, degree
         Returns:
-
+            以下のタプル:
+                trs_0_f: 正面側からの入射光に対する垂直入射時の日射透過率
+                trs_0_b: 背面側からの入射光に対する垂直入射時の日射透過率
+                ref_0_f: 正面側からの入射光に対する垂直入射時の日射反射率
+                ref_0_b: 背面側からの入射光に対する垂直入射時の日射反射率
         """
 
         # 斜め入射のコサイン
@@ -115,7 +142,7 @@ class GlassInput:
             raise ValueError
 
 
-class RoleInput:
+class RoleInput(ObliqueIncidenceProperty):
 
     def __init__(self, trs_0_f: float, trs_0_b: float, ref_0_f: float, ref_0_b: float):
         """
@@ -127,18 +154,23 @@ class RoleInput:
             ref_0_b: 背面側からの入射光に対する垂直入射時の日射反射率
         """
 
+        super().__init__()
+
         self._trs_0_f = trs_0_f
         self._trs_0_b = trs_0_b
         self._ref_0_f = ref_0_f
         self._ref_0_b = ref_0_b
 
-    #
     def get_ang_prop(self, phi):
         """
         入射角φの日射透過率及び日射反射率の計算
         Args:
             phi: 入射角
         Returns:
-            日射反射率
+            以下のタプル:
+                trs_0_f: 正面側からの入射光に対する垂直入射時の日射透過率
+                trs_0_b: 背面側からの入射光に対する垂直入射時の日射透過率
+                ref_0_f: 正面側からの入射光に対する垂直入射時の日射反射率
+                ref_0_b: 背面側からの入射光に対する垂直入射時の日射反射率
         """
         return self._trs_0_f, self._trs_0_b, self._ref_0_f, self._ref_0_b

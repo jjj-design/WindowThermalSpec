@@ -18,6 +18,7 @@
 <-- ASRIG  
 <-- SHTFG  
 <-- HGOG  
+<-- incident_solar_radiation_on_glazing
 
 * division_diffuse_ratio  
 --> TSRTG  
@@ -26,6 +27,12 @@
 
 * glass_thermal_balance  
 --> main  
+
+* incident_solar_radiation_on_glazing  
+--> TSRTG(only in Example)  
+--> ASRIG(only in Example)  
+--> main  
+<-- None  
 
 * multiple_reflection  
 --> TSRTG  
@@ -69,24 +76,18 @@
 --> main  
 <-- None  
 
-* IncidentSolarRadiationOnGlazing(ISROG)  
---> TSRTG(only in Example)  
---> ASRIG(only in Example)  
---> main  
-<-- None  
-
 * TransmittedSolarRadiationThroughGlazing(TSRTG)  
 <-- oblique_incidence_property  
 <-- multiple_reflection  
 <-- division_diffuse_ratio  
-<-- ISROG(only in Example)  
+<-- incident_solar_radiation_on_glazing(only in Example)  
 --> main  
 
 * AbsorbedSolarRadiationIntoGlazing(ASRIG)  
 <-- oblique_incidence_property  
 <-- multiple_reflection  
 <-- division_diffuse_ratio  
-<-- ISROG(only in Example)  
+<-- incident_solar_radiation_on_glazing(only in Example)  
 --> main  
 
 * SecondaryHeatTransferFromGlazing(SHTFG)  

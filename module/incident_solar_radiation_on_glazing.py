@@ -18,6 +18,18 @@ class ItaInput:
         self._itd = itd
         self._itr = itr
 
+    @property
+    def itb(self):
+        return self._itb
+
+    @property
+    def itd(self):
+        return self._itd
+
+    @property
+    def itr(self):
+        return self._itr
+
     def incident_sol(self):
         """
         開口面入射日射量（合計値）を求める。
